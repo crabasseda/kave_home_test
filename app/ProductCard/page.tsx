@@ -33,13 +33,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, isFavorite }) => {
       localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
     }
   };
+  
   return (
     <div className={styles.productCard}>
       <img src={product.productImageUrl} alt={product.productName} style={{width:'300px', height:'250px'}}/>
       <button onClick={handleToggleFavorite}>
         {localIsFavorite ? <FaHeart size={20} color="red"/> : <FaRegHeart size={20} color="black"/> }
       </button>
-      <Link key={product.productSku} href={`/productDetail/${product.productSku}`}>
+      <Link key={product.productSku} href={`/ProductDetails/${product.productSku}`}>
         <h3><strong>{product.productName}</strong> </h3>
       </Link>
       <p>${product.productPrice}</p> 

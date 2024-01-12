@@ -24,11 +24,9 @@ interface ProductsListPageProps {
 }
 
 const ProductsListPage: React.FC<ProductsListPageProps> = () => {
-  // const pageNumber = 1;
+
   const searchParams = useSearchParams();
   const pageNumber = Number(searchParams.get('page'))
-  console.log(pageNumber)
-
 
   const [favorites, setFavorites] = useState<string[]>([]);
 

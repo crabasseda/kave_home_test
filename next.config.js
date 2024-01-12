@@ -3,8 +3,8 @@ const nextConfig = {
     async rewrites() {
         return [
           {
-            source: '/productDetail/:productSku',
-            destination: '/productDetail/[productSku]',
+            source: '/ProductDetails/:productSku',
+            destination: '/ProductDetails/[productSku]',
           },
         ];
       },

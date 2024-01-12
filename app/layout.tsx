@@ -25,7 +25,7 @@ export default function RootLayout({
             </Link>
           </div>
           <div className='header-content-right'>
-            <Link href="/favoritos">
+            <Link href="/ProductFavorites">
                 <FaRegHeart size={20} color="black"/> 
             </Link>
           </div>
