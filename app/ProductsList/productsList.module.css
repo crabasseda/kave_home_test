@@ -1,3 +1,6 @@
+@media (max-width: 767px) {}
+@media (min-width: 768px) {}
+
 .title{
     text-align: center;
     margin-top: 50px;
@@ -11,19 +14,19 @@
     width: 100%;
     height: auto;
     padding: 50px;
-    display: flex;
-    flex-wrap: wrap; 
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat( auto-fit, minmax(300px, 1fr) );
+    place-items: center;
+    grid-gap:10px;
 }
 .pagination{
     cursor: pointer;
     display: flex;
     justify-content: center; 
+    gap:10px;
     padding-bottom: 20px;
 }
-.pagination p{
-    margin-right: 10px;
-}
+
 .currentPage {
     font-weight: bold;
   }

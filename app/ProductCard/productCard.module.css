@@ -1,8 +1,8 @@
 .productCard{
     flex-direction: column;
     width: 300px;
-    margin-bottom:10px; 
-    margin-right:10px;
+    /* margin-bottom:10px; 
+    margin-right:10px; */
     position:relative;
 }
 .productCard h3{

@@ -4,10 +4,10 @@ import styles from './productsList.module.css';
 import ProductCard from '../ProductCard/page';
 import fetchData from '@/utils/api';
 import { useSearchParams  } from 'next/navigation';
-
+import Link from 'next/link';
 
 const itemsPerPage = 20;
-const totalPages= 10;
+const pageNumbersToShow = 8;
 
 interface Product {
   productSku: string;
@@ -27,8 +27,8 @@ const ProductsListPage: React.FC<ProductsListPageProps> = () => {
 
   const searchParams = useSearchParams();
   const pageNumber = Number(searchParams.get('page'))
-
   const [favorites, setFavorites] = useState<string[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
       // Recupera la lista de favoritos del localStorage al cargar la página
@@ -36,34 +36,38 @@ const ProductsListPage: React.FC<ProductsListPageProps> = () => {
       setFavorites(storedFavorites);
     }, []);
 
-  const [products, setProducts] = useState<Product[]>([]);
-
   useEffect(() => {
     const fetchDataFromApi = async () => {
-      const start = (pageNumber - 1) * itemsPerPage;
-      const end = start + itemsPerPage;
       try {
         const data = await fetchData();
-        const slicedProducts = data.slice(start, end);
-        setProducts(slicedProducts);
+        setProducts(data);
       } catch (error) {
         console.error('Error fetching product data:', error);
       }
     };
     fetchDataFromApi();
-  }, [pageNumber]);
+  }, []);
 
-
-  const handlePageClick = (newPageNumber: number) => {
-
-    const params = new URLSearchParams(window.location.search);
-    params.set('page', String(newPageNumber));
-
-    // Cambia la URL y provoca la recarga de la página
-    window.location.href = `${window.location.pathname}?${params.toString()}`;
   
-  };
-  
+  const start = (pageNumber - 1) * itemsPerPage;
+  const end = start + itemsPerPage;
+  const slicedProducts = products.slice(start, end);
+  const totalPages = products.length/itemsPerPage;
+
+  const nextMultipleOfX = (x:number, num:number) =>{
+    let i = num;
+    while(i%x!=0){
+      i++;
+    }
+    return i;
+  }
+  const lastNumberPage = nextMultipleOfX(pageNumbersToShow,pageNumber)
+  const firstNumberPage = lastNumberPage - pageNumbersToShow +1;
+  const arrayNumbersPage = [];
+  for (let i = firstNumberPage; i <= lastNumberPage; i++) {
+    if (i<=totalPages){ arrayNumbersPage.push(i);}
+  }
+
   return (
       <>
       <div className={styles.title}>
@@ -71,23 +75,26 @@ const ProductsListPage: React.FC<ProductsListPageProps> = () => {
         <p>Lore ipsum dolor sit amet</p>
       </div>
       <div className={styles.containerProducts}>
-        {products.map((product) => (
+        {slicedProducts.map((product) => (
           <ProductCard key={product.productSku} product={product} isFavorite={favorites.includes(product.productSku)}/>
         ))}
       </div>
       
       <div className={styles.pagination}>
-        {Array.from({ length: totalPages }, (_, index) => (
-            <p
-              key={index}
-              onClick={() => handlePageClick(index + 1) }
-              className={pageNumber === index + 1 ? styles.currentPage : ''}
-              >
-              {index + 1}
+        {firstNumberPage > 1 &&  <Link href={`/ProductsList?page=${firstNumberPage-1}`}>
+          {'<'}
+        </Link> }
+        {arrayNumbersPage.map((numPage) => (
+          <Link key={numPage} href={`/ProductsList?page=${numPage}`}>
+            <p className={pageNumber === numPage? styles.currentPage : ''}>
+            {numPage}
             </p>
-            )
+          </Link>
           )
-        }
+        )}
+        {lastNumberPage < totalPages && <Link href={`/ProductsList?page=${lastNumberPage+1}`}>
+          {'>'}
+        </Link> }
       </div>
     </>
   );

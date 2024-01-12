@@ -131,9 +131,10 @@
         width: 100%;
         height: auto;
         padding: 50px;
-        display: flex;
-        flex-wrap: wrap; 
-        justify-content: center;
+        display: grid;
+        grid-template-columns: repeat( auto-fit, minmax(300px, 1fr) );
+        place-items: center;
+        grid-gap:10px;
     }
     .buttonProducts{
         display: flex;
