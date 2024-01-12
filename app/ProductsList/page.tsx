@@ -1,9 +1,9 @@
 'use client'
 import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
 import styles from './productsList.module.css';
 import ProductCard from '../ProductCard/page';
 import fetchData from '@/utils/api';
+import { useSearchParams  } from 'next/navigation';
 
 
 const itemsPerPage = 20;
@@ -24,7 +24,11 @@ interface ProductsListPageProps {
 }
 
 const ProductsListPage: React.FC<ProductsListPageProps> = () => {
-  const pageNumber = 1;
+  // const pageNumber = 1;
+  const searchParams = useSearchParams();
+  const pageNumber = Number(searchParams.get('page'))
+  console.log(pageNumber)
+
 
   const [favorites, setFavorites] = useState<string[]>([]);
 
@@ -51,6 +55,16 @@ const ProductsListPage: React.FC<ProductsListPageProps> = () => {
     fetchDataFromApi();
   }, [pageNumber]);
 
+
+  const handlePageClick = (newPageNumber: number) => {
+
+    const params = new URLSearchParams(window.location.search);
+    params.set('page', String(newPageNumber));
+
+    // Cambia la URL y provoca la recarga de la página
+    window.location.href = `${window.location.pathname}?${params.toString()}`;
+  
+  };
   
   return (
       <>
@@ -66,12 +80,16 @@ const ProductsListPage: React.FC<ProductsListPageProps> = () => {
       
       <div className={styles.pagination}>
         {Array.from({ length: totalPages }, (_, index) => (
-          <Link key={index} href={`/productsList?page=${index + 1}`}>
-            <p className={pageNumber === index + 1 ? styles.currentPage : ''}>
+            <p
+              key={index}
+              onClick={() => handlePageClick(index + 1) }
+              className={pageNumber === index + 1 ? styles.currentPage : ''}
+              >
               {index + 1}
             </p>
-          </Link>
-        ))}
+            )
+          )
+        }
       </div>
     </>
   );
