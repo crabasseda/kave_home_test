@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import './globals.css'
-
-const inter = Inter({ subsets: ['latin'] })
+import { poppins } from './fonts'
+import { FaRegHeart } from 'react-icons/fa';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -11,12 +11,29 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  
 }: {
   children: React.ReactNode
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={`${poppins.className} antialiased`}>
+        <header>
+          <div className="header-content-left">
+            <Link href="/">
+              <h1>Kave Home</h1>
+            </Link>
+          </div>
+          <div className='header-content-right'>
+            <Link href="/favoritos">
+                <FaRegHeart size={20} color="black"/> 
+            </Link>
+          </div>
+        </header>
+        <main>
+          {children}
+        </main> 
+      </body>
     </html>
   )
 }

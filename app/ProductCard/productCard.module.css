@@ -1,0 +1,19 @@
+.productCard{
+    flex-direction: column;
+    width: 300px;
+    margin-bottom:10px; 
+    margin-right:10px;
+    position:relative;
+}
+.productCard h3{
+    width:300px;
+    font-size:15px;
+}
+.productCard button{
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 8px;
+    cursor: pointer;
+    background: none;
+}

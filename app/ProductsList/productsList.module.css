@@ -1,0 +1,36 @@
+/* Phone styles*/
+
+@media (max-width: 767px) {
+}
+  /* Computer styles */
+ 
+  @media (min-width: 768px) {}
+
+.title{
+    text-align: center;
+    margin-top: 50px;
+}
+.title h1{
+    font-family: 'Noto_Serif';
+    font-size: 30px;
+    margin-bottom: 10px; 
+} 
+.containerProducts{
+    width: 100%;
+    height: auto;
+    padding: 50px;
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: space-between;
+}
+.pagination{
+    display: flex;
+    justify-content: center; 
+    padding-bottom: 20px;
+}
+.pagination p{
+    margin-right: 10px;
+}
+.currentPage {
+    font-weight: bold;
+  }
