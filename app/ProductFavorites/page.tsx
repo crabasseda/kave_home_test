@@ -5,36 +5,35 @@ import ProductCard from '../ProductCard/page';
 import fetchData from "@/utils/api";
 
 interface Product {
-    productSku: string;
-    productName: string;
-    productImageUrl: string;
-    productPrice: string;
-  }  
+  productSku: string;
+  productName: string;
+  productImageUrl: string;
+  productPrice: string;
+}  
 
 export default function Page(){
-    const [products, setProducts] = useState<Product[]>([]);
-    const [favorites, setFavorites] = useState<string[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [favorites, setFavorites] = useState<string[]>([]);
 
   useEffect(() => {
-      // Recupera la lista de favoritos del localStorage al cargar la página
-      const storedFavorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-      setFavorites(storedFavorites);
-    }, []);
+    const fetchDataFromApi = async () => {
+      try {
+        const data = await fetchData();
+        setProducts(data);
+      } catch (error) {
+        console.error('Error fetching product data:', error);
+      }
+    };
+    fetchDataFromApi();
+  }, []);
 
-    // Obtener solo los productos que son favoritos
-    const favoriteProducts = products.filter((product) => favorites.includes(product.productSku));
+  useEffect(() => {
+    const storedFavorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+    setFavorites(storedFavorites);
+  }, []);
 
-    useEffect(() => {
-      const fetchDataFromApi = async () => {
-        try {
-          const data = await fetchData();
-          setProducts(data);
-        } catch (error) {
-          console.error('Error fetching product data:', error);
-        }
-      };
-      fetchDataFromApi();
-    }, []);
+  // Obtener solo los productos que son favoritos
+  const favoriteProducts = products.filter((product) => favorites.includes(product.productSku));
 
   return(
     <>

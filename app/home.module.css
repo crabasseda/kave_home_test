@@ -1,7 +1,7 @@
 /* Phone styles*/
 
 @media (max-width: 767px) {
-
+    
     .containerImage{
         height: 660px;
         overflow: hidden;
@@ -94,62 +94,63 @@
         display: inline-block;
     }
     .containerLinksImage {
-        max-width: 100vw;
-        padding:20px;
+        padding: 20px;
+        justify-content: center;
     }  
     .containerLinksImage ul {
         list-style: none;
-        margin: 0;
         display: flex;
+        justify-content: center;
     } 
     .containerLinksImage ul li {
-        margin-right: 10px; 
+        text-align: center;
+        padding: 10px;
     }   
 }
 
 /* Common styles */
 
-    .containerLinks{
-        text-align: center;
-        padding: 20px;
-    } 
-    .title{
-        font-family: 'Noto_Serif';
-        font-size: 30px;
-        margin-bottom: 10px; 
-    } 
-    .containerLinks ul li a:hover {
-        background-color: #ddd;
-    }
-    .containerLinksImage a{
-        text-decoration: underline;
-    }
-    .containerLinksImage img{
-        margin-bottom: 20px;
-    }
-    .containerProducts{
-        width: 100%;
-        height: auto;
-        padding: 50px;
-        display: grid;
-        grid-template-columns: repeat( auto-fit, minmax(300px, 1fr) );
-        place-items: center;
-        grid-gap:10px;
-    }
-    .buttonProducts{
-        display: flex;
-        justify-content: center;
-        align-items: center; 
-        padding: 20px;
-    }
-    .buttonProducts button{
-        height: 50px;
-        width: 250px;
-        border:1px solid;
-        text-transform: uppercase;
-        background: none;
-        cursor: pointer;
-    }
-    
+.containerLinks{
+    text-align: center;
+    padding: 20px;
+} 
+.title{
+    font-family: 'Noto_Serif';
+    font-size: 30px;
+    margin-bottom: 10px; 
+} 
+.containerLinks ul li a:hover {
+    background-color: #ddd;
+}
+.containerLinksImage a{
+    text-decoration: underline;
+}
+.containerLinksImage img{
+    margin-bottom: 20px;
+}
+.containerProducts{
+    width: 100%;
+    height: auto;
+    padding: 50px;
+    display: grid;
+    grid-template-columns: repeat( auto-fit, minmax(300px, 1fr) );
+    place-items: center;
+    grid-gap:10px;
+}
+.buttonProducts{
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    padding: 20px;
+}
+.buttonProducts button{
+    height: 50px;
+    width: 250px;
+    border:1px solid;
+    text-transform: uppercase;
+    background: none;
+    cursor: pointer;
+}
+
   
 

@@ -27,14 +27,9 @@ const ProductsListPage: React.FC<ProductsListPageProps> = () => {
 
   const searchParams = useSearchParams();
   const pageNumber = Number(searchParams.get('page'))
-  const [favorites, setFavorites] = useState<string[]>([]);
-  const [products, setProducts] = useState<Product[]>([]);
 
-  useEffect(() => {
-      // Recupera la lista de favoritos del localStorage al cargar la página
-      const storedFavorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-      setFavorites(storedFavorites);
-    }, []);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [favorites, setFavorites] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchDataFromApi = async () => {
@@ -48,7 +43,11 @@ const ProductsListPage: React.FC<ProductsListPageProps> = () => {
     fetchDataFromApi();
   }, []);
 
-  
+  useEffect(() => {
+    const storedFavorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+    setFavorites(storedFavorites);
+  }, []);
+ 
   const start = (pageNumber - 1) * itemsPerPage;
   const end = start + itemsPerPage;
   const slicedProducts = products.slice(start, end);
@@ -79,7 +78,6 @@ const ProductsListPage: React.FC<ProductsListPageProps> = () => {
           <ProductCard key={product.productSku} product={product} isFavorite={favorites.includes(product.productSku)}/>
         ))}
       </div>
-      
       <div className={styles.pagination}>
         {firstNumberPage > 1 &&  <Link href={`/ProductsList?page=${firstNumberPage-1}`}>
           {'<'}

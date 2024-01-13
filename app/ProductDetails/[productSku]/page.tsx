@@ -16,10 +16,13 @@ interface Product {
 
 const productSkuPage: React.FC = () =>{
   
-  const [products, setProducts] = useState<Product[]>([]);
   const pathname = usePathname();
   const productSku = pathname.split('/').pop();
- 
+
+  const [products, setProducts] = useState<Product[]>([]);
+  const [favorites, setFavorites] = useState<string[]>([]);
+  const [localIsFavorite, setIsFavorite] = useState<boolean>();
+
   useEffect(() => {
     const fetchDataFromApi = async () => {
       try {
@@ -32,30 +35,21 @@ const productSkuPage: React.FC = () =>{
     fetchDataFromApi();
   },[]);
 
-  //Mostrar solo un producto
+  //Obtener el producto seleccionado
   const selectedProduct = products.filter((product) => product.productSku == productSku);
   const product = selectedProduct[0];
 
-  // Obtener si el producto seleccionado es favorito
-  
-  const [favorites, setFavorites] = useState<string[]>([]);
+  // Obtener si el producto es favorito
   useEffect(() => {
     const storedFavorites = JSON.parse(localStorage.getItem('favorites') || '[]');
     setFavorites(storedFavorites);
-  }, []);
-
-  //const isFavorite = true;
-  //const isFavorite = favorites.includes(productSku)
-
-  // //configuración favoritos
- // const [localIsFavorite, setIsFavorite] = useState<boolean>(isFavorite);
-  //const [localIsFavorite, setIsFavorite] = useState<boolean>(favorites.includes(productSku));
-  let [localIsFavorite, setIsFavorite] = useState<boolean>(
-    productSku ? favorites.includes(productSku) : false
-  );
+    if(product != undefined){
+      setIsFavorite(favorites.includes(product.productSku));
+    }
+  }, [product]);
+ 
 
   const handleToggleFavorite = () => {
-
     setIsFavorite((prevFavorite) => !prevFavorite);
     if (!localIsFavorite) {
       const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
@@ -67,12 +61,7 @@ const productSkuPage: React.FC = () =>{
     }
   };
 
-  if(selectedProduct.length==1 && productSku !== undefined && product){
-    console.log('-----------')
-    console.log('isfavorite',favorites.includes(productSku))
-    const isFavorite = favorites.includes(productSku)
-    localIsFavorite = isFavorite;
-    console.log('localisfavorite',localIsFavorite)
+  if(selectedProduct.length==1 && product && localIsFavorite != undefined){
     return(
       <>  
       <div className={styles.container}>

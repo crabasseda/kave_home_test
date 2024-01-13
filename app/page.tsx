@@ -14,16 +14,9 @@ interface Product {
 }  
 
 export default function Home() {
-  
-  const [favorites, setFavorites] = useState<string[]>([]);
-
-  useEffect(() => {
-      // Recupera la lista de favoritos del localStorage al cargar la página
-      const storedFavorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-      setFavorites(storedFavorites);
-    }, []);
 
   const [products, setProducts] = useState<Product[]>([]);
+  const [favorites, setFavorites] = useState<string[]>([]);
   
   useEffect(() => {
     const fetchDataFromApi = async () => {
@@ -37,7 +30,12 @@ export default function Home() {
     };
     fetchDataFromApi();
   }, []);
-  
+
+  useEffect(() => {
+    const storedFavorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+    setFavorites(storedFavorites);
+  }, []);
+
   return (
     <> 
     <div className={styles.containerImage}>
