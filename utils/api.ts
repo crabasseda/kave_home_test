@@ -1,6 +1,6 @@
 const fetchData = async () => {
     try {
-      const url = 'https://kavehome.com/nfeeds/es/es/templatebuilder/20231221';
+      const url = '/products.json' //'https://kavehome.com/nfeeds/es/es/templatebuilder/20231221'; 
       const options = {
         method: 'GET',
       };
